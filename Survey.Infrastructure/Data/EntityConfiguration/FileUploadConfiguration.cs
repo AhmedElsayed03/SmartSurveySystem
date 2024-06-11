@@ -18,10 +18,6 @@ namespace Survey.Infrastructure.Data.EntityConfiguration
             builder.HasOne(i => i.Member)
                    .WithMany(i => i.Files)
                    .HasForeignKey(i => i.MemberId);
-
-
-
         }
-
     }
 }

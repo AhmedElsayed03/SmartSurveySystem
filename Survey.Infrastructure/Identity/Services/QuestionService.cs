@@ -21,21 +21,21 @@ namespace Survey.Infrastructure.Identity.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void addQuestion(QuestionAddDto newQuestion)
+        public async Task AddQuestionAsync(QuestionAddDto newQuestion)
         {
             Question question = new Question()
             {
                 Text = newQuestion.Text,
                 IsDeleted = false,
                 CreateTime = DateTime.Now,
-                //CreatedBy = GetAdminID from Token
+                CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newQuestion.Token),
                 Order = newQuestion.Order,
                 TypeId = newQuestion.TypeId,
                 SurveyId = newQuestion.SurveyId,
             };
 
-            _unitOfWork.QuestionRepo.AddAsync(question);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.QuestionRepo.AddAsync(question);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

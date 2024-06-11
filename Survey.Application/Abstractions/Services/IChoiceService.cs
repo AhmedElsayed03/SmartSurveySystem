@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Survey.Application.Models.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Survey.Application.Abstractions.Services
 {
     public interface IChoiceService
     {
-
+        Task AddChoiceAsync(ChoiceAddDto newChoice);
     }
 }

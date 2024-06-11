@@ -19,7 +19,7 @@ namespace Survey.Infrastructure.Identity.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void addChoice(ChoiceAddDto newChoice)
+        public async Task AddChoiceAsync(ChoiceAddDto newChoice)
         {
             Choice Choice = new Choice()
             {
@@ -28,11 +28,12 @@ namespace Survey.Infrastructure.Identity.Services
                 QuestionId = newChoice.QuestionId,
                 Next_Question_Order = newChoice.Next_Question_Order, //Nullable
                 CreateTime = DateTime.Now,
-                //CreatedBy = GetAdminID from Token
+                CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newChoice.Token)
             };
 
-            _unitOfWork.ChoiceRepo.AddAsync(Choice);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.ChoiceRepo.AddAsync(Choice);
+            await _unitOfWork.SaveChangesAsync();
         }
+        
     }
 }

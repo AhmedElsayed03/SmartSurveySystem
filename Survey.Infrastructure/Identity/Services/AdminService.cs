@@ -29,7 +29,7 @@ namespace Survey.Infrastructure.Identity.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<int> getAdminFormToken(string token)
+        public async Task<int> GetAdminFormToken(string token)
         {
             return await _unitOfWork.AdminRepo.GetUserFormTokenAsync(token);
         }

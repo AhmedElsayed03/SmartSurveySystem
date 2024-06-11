@@ -10,6 +10,7 @@ namespace Survey.Application.Models.DTOs
     public class ChoiceAddDto
     {
         public string Text { get; set; } = string.Empty;
+        public string Token { get; set; } = string.Empty;
         public int Order { get; set; }
         public int Next_Question_Order { get; set; }
         public int QuestionId { get; set; }

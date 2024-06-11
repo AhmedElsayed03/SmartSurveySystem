@@ -13,5 +13,6 @@ namespace Survey.Application.Abstractions.Repositories
         Task AddAsync(T entity);
         void UpdateAsync(T entity);
         void DeleteAsync(T entity);
+        Task<int> GetUserFormTokenAsync(string tokenFromHeader);
     }
 }

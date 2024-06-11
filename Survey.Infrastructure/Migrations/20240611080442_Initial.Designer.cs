@@ -12,7 +12,7 @@ using Survey.Infrastructure.Data.Context;
 namespace Survey.Infrastructure.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20240610140605_Initial")]
+    [Migration("20240611080442_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -142,8 +142,19 @@ namespace Survey.Infrastructure.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

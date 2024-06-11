@@ -10,5 +10,6 @@ namespace Survey.Application.Abstractions.Services
     public interface IAdminService
     {
         Task AddAdminAsync(AdminAddDto newAdmin);
+        Task<int> getAdminFormToken(string token);
     }
 }

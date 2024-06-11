@@ -25,12 +25,14 @@ namespace Survey.Infrastructure.Identity.Services
 
                 Name = newSurvey.Name,
                 CreateTime = DateTime.Now,
-                //CreatedBy = GetAdminID from Token
+                CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newSurvey.Token)
 
             };
 
             await _unitOfWork.SurveyRepo.AddAsync(survey);
             await _unitOfWork.SaveChangesAsync();
         }
+
+
     }
 }

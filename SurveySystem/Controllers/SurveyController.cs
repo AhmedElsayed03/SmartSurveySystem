@@ -22,6 +22,7 @@ namespace SurveySystem.API.Controllers
         [Authorize(Policy = "For Admins")]
         public async Task<NoContent> AddSurveyAsync(SurveyAddDto newSurvey) {
 
+            newSurvey.Token = Request.Headers.Authorization!;
             await _surveyService.AddSurveyAsync(newSurvey);
 
             return TypedResults.NoContent();

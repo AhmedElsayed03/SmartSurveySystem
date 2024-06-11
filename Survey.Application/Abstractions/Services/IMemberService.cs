@@ -10,5 +10,6 @@ namespace Survey.Application.Abstractions.Services
     public interface IMemberService
     {
         Task AddMemberAsync(MemberAddDto newMember);
+        Task<int> getMemberFormToken(string token);
     }
 }

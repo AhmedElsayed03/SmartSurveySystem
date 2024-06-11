@@ -31,21 +31,88 @@ namespace Survey.Infrastructure.Identity.Services.Identity
         private readonly UserManager<SystemUser> _userManager;
         private readonly RoleManager<SystemRole> _roleManager;
         private readonly IMemberService _memberService;
+        private readonly IAdminService _adminService;
         private readonly JwtSettings _jwtSettings;
 
 
-        public AuthService(UserManager<SystemUser> userManager, RoleManager<SystemRole> roleManager, IMemberService memberService,
+        public AuthService(UserManager<SystemUser> userManager, RoleManager<SystemRole> roleManager, IMemberService memberService, IAdminService adminService,
             IOptions<JwtSettings> jwtSettings)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _memberService = memberService;
+            _adminService = adminService;
             _jwtSettings = jwtSettings.Value;
 
         }
 
+        #region Register For Admin
+        public async Task<RegisterResponseDto> RegisterAdminAsync(RegisterAdminRequestDto request)
+        {
+            var existingUser = await _userManager.FindByEmailAsync(request.Email);
+            if (existingUser is not null)
+            {
+                throw new BadRequestException(ErrorMessages.EmailExists);
+            }
+
+            //Inserting Resgister Data
+            var newUser = new SystemUser
+            {
+                UserName = request.UserName,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+
+            };
+
+            //Inserting Password to create the new account
+            var creationResult = await _userManager.CreateAsync(newUser, request.Password);
+            creationResult.ThrowIfFailed(ErrorMessages.RegistrationFailed);
+
+
+            var addToRoleResult = await _userManager.AddToRoleAsync(newUser, "Admin");
+            addToRoleResult.ThrowIfFailed(ErrorMessages.AddingUserToRoleFailed);
+
+
+            //Getting Roles to insert them as claims
+            var userRoles = await _userManager.GetRolesAsync(newUser);
+
+
+            //Determine the claims for the new user
+            IEnumerable<Claim> claims = [
+                       new(ClaimTypes.NameIdentifier, newUser.Id.ToString()), //ID
+                       new(ClaimTypes.Email, newUser.Email), //Email
+                       new("sub", newUser.UserName), //UserName
+
+            ];
+
+            //Adding Roles as claims
+            claims = claims.Concat(userRoles.Select(r => new Claim(ClaimTypes.Role, r)));
+
+
+            //Adding Claims (initial roles + claims)
+            var claimsResult = await _userManager.AddClaimsAsync(newUser, claims);
+            claimsResult.ThrowIfFailed(ErrorMessages.RegistrationFailed);
+
+
+            //Adding User to members table
+
+            var newAdmin = new AdminAddDto { UserId = newUser.Id, JobTitle = request.JobTitle, Department = request.Department};
+            await _adminService.AddAdminAsync(newAdmin);
+
+
+            return new RegisterResponseDto(
+                newUser.Id,
+                newUser.UserName,
+                newUser.FirstName,
+                newUser.LastName,
+                newUser.Email,
+                userRoles);
+        }
+        #endregion
+
         #region Register For External User
-        public async Task<RegisterResponseDto> RegisterAsync(RegisterMemberRequestDto request)
+        public async Task<RegisterResponseDto> RegisterMemberAsync(RegisterMemberRequestDto request)
         {
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser is not null)

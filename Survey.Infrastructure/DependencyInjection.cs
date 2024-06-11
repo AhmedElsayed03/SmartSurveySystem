@@ -65,6 +65,7 @@ namespace Survey.Infrastructure
             services.AddScoped<ISubmissionRepo, SubmissionRepo>();
             services.AddScoped<IMemberSurveyRepo, MemberSurveyRepo>();
             services.AddScoped<IMemberRepo, MemberRepo>();
+            services.AddScoped<IAdminRepo, AdminRepo>();
             #endregion
 
 
@@ -76,6 +77,7 @@ namespace Survey.Infrastructure
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IFileUploadService, FileUploadService>();
             services.AddScoped<ISubmissionService, SubmissionService>();
+            services.AddScoped<IAdminService, AdminService>();
             #endregion
 
 

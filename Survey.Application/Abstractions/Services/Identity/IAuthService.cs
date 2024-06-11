@@ -10,12 +10,14 @@ namespace Survey.Application.Abstractions.Services.Identity
 {
     public interface IAuthService
     {
-        Task<RegisterResponseDto> RegisterAsync(RegisterMemberRequestDto MemberAddDto);
+        Task<RegisterResponseDto> RegisterMemberAsync(RegisterMemberRequestDto request);
+        Task<RegisterResponseDto> RegisterAdminAsync(RegisterAdminRequestDto request);
         Task<AuthResponseDto> LoginAsync(LoginRequestDto request);
         Task AddRoleAsync(string roleName);
         Task<List<RoleDto>> GetRolesAsync();
         Task<List<string>> GetUsersInRoleAsync(string roleId);
         Task AddUserToRoleAsync(string roleId, string userId);
         Task RemoveUserFromRoleAsync(string roleId, string userId);
+        
     }
 }

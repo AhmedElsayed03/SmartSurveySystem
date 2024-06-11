@@ -19,7 +19,7 @@ namespace Survey.Infrastructure.Identity.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void addSurvey(SurveyAddDto newSurvey)
+        public async Task AddSurveyAsync(SurveyAddDto newSurvey)
         {
             Domain.Entities.Survey survey = new Domain.Entities.Survey() {
 
@@ -29,8 +29,8 @@ namespace Survey.Infrastructure.Identity.Services
 
             };
 
-            _unitOfWork.SurveyRepo.AddAsync(survey);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SurveyRepo.AddAsync(survey);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

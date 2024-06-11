@@ -21,8 +21,17 @@ namespace SurveySystem.API.Controllers
 
         [HttpPost("register-user")]
         public async Task<Ok<RegisterResponseDto>> RegisterMemberAsync(RegisterMemberRequestDto request)
+        {   
+
+            var response = await _authService.RegisterMemberAsync(request);
+            return TypedResults.Ok(response);
+        }
+
+        [HttpPost("register-admin")]
+        public async Task<Ok<RegisterResponseDto>> RegisterAdminAsync(RegisterAdminRequestDto request)
         {
-            var response = await _authService.RegisterAsync(request);
+
+            var response = await _authService.RegisterAdminAsync(request);
             return TypedResults.Ok(response);
         }
 

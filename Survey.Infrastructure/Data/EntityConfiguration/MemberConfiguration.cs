@@ -35,6 +35,6 @@ namespace Survey.Infrastructure.Data.EntityConfiguration
                 //builder.HasData(students);
 
 
-        }
+            }
     }
 }

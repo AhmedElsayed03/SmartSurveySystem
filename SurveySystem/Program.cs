@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Survey.Infrastructure;
+using System.Security.Claims;
 using System.Text;
 
 namespace SurveySystem.API
@@ -46,7 +47,26 @@ namespace SurveySystem.API
             });
 
             #endregion
+            #region Authorization
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("For Members", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "Member")
+                    .RequireClaim(ClaimTypes.NameIdentifier);
+                    //policy.RequireClaim("Role", "AppUser","other value of roles") 
+                });
+
+                options.AddPolicy("For Admins", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "Admin")
+                    .RequireClaim(ClaimTypes.NameIdentifier);
+                    //policy.RequireClaim("Role", "AppUser","other value of roles") 
+                });
+            });
+
+            #endregion
             #region Services
             builder.Services.AddInfrastructureServices(builder.Configuration);
             #endregion

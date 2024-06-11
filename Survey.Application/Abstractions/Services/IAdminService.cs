@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Survey.Application.Abstractions.Services
 {
-    public interface ISurveyService
+    public interface IAdminService
     {
-        Task AddSurveyAsync(SurveyAddDto newSurvey);
+        Task AddAdminAsync(AdminAddDto newAdmin);
     }
 }

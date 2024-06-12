@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Survey.Application.Models.DTOs
 {
-    public class CompleteSurveyDTO //Survey Including Questions, Choices
+    public class SurveyWithQuestionsDto
     {
         //Survey
         public string SurveyName { get; set; } = string.Empty;
 
         //Question
-        public IEnumerable<QuestionWithChoicesReadDto> Questions { get; set; } = new List<QuestionWithChoicesReadDto>();
-
+        public IEnumerable<QuestionReadDto> Questions { get; set; } = new List<QuestionReadDto>();
 
 
     }

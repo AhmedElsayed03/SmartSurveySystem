@@ -20,7 +20,8 @@ namespace SurveySystem.API.Controllers
 
         [HttpPost("create-survey")]
         [Authorize(Policy = "For Admins")]
-        public async Task<NoContent> AddSurveyAsync(SurveyAddDto newSurvey) {
+        public async Task<NoContent> AddSurveyAsync(SurveyAddDto newSurvey)
+        {
 
             newSurvey.Token = Request.Headers.Authorization!;
             await _surveyService.AddSurveyAsync(newSurvey);
@@ -40,6 +41,14 @@ namespace SurveySystem.API.Controllers
         public async Task<CompleteSurveyDTO> GetCompleteSurvey(int id)
         {
             var completeSurvey = await _surveyService.GetSurveyAsync(id);
+
+            return completeSurvey;
+        }
+
+        [HttpGet("get-survey-with-questions/{id}")]
+        public async Task<SurveyWithQuestionsDto> GetSurveyWithQuestions(int id)
+        {
+            var completeSurvey = await _surveyService.GetSurveyWithQuestionsAsync(id);
 
             return completeSurvey;
         }

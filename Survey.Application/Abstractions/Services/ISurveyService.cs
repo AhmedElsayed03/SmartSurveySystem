@@ -12,5 +12,7 @@ namespace Survey.Application.Abstractions.Services
         Task AddSurveyAsync(SurveyAddDto newSurvey);
         Task<CompleteSurveyDTO> GetSurveyAsync(int surveyID);
         Task<List<SurveyReadDto>> GetAllSurveysAsync();
+        Task<SurveyWithQuestionsDto> GetSurveyWithQuestionsAsync(int surveyID);
+
     }
 }

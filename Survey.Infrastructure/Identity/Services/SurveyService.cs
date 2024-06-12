@@ -19,6 +19,7 @@ namespace Survey.Infrastructure.Identity.Services
             _unitOfWork = unitOfWork;
         }
 
+        //Create Survey
         public async Task AddSurveyAsync(SurveyAddDto newSurvey)
         {
             Domain.Entities.Survey survey = new Domain.Entities.Survey()
@@ -34,17 +35,19 @@ namespace Survey.Infrastructure.Identity.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
+        //Get All surveys (Names)
         public async Task<List<SurveyReadDto>> GetAllSurveysAsync()
         {
             var surveys = await _unitOfWork.SurveyRepo.GetAllAsync();
 
-            var allSsurveys = surveys.Select(s => new SurveyReadDto
+            var allSurveys = surveys.Select(s => new SurveyReadDto
             {
                 SurveyName = s.Name,
             }).ToList();
-            return allSsurveys;
+            return allSurveys;
         }
 
+        //Get Complete Survey with questions and choices
         public async Task<CompleteSurveyDTO> GetSurveyAsync(int surveyID)
         {
             var survey = await _unitOfWork.SurveyRepo.GetCompleteSurvey(surveyID);
@@ -52,7 +55,7 @@ namespace Survey.Infrastructure.Identity.Services
             var completeSurvey = new CompleteSurveyDTO
             {
                 SurveyName = survey!.Name,
-                Questions = survey.Questions.Select(i => new QuestionReadDto
+                Questions = survey.Questions.Select(i => new QuestionWithChoicesReadDto
                 {
                     QuestionText = i.Text,
                     Order = i.Order,
@@ -62,8 +65,26 @@ namespace Survey.Infrastructure.Identity.Services
                         Text = i.Text,
                         Order = i.Order,
                         Next_Question_Order = i.Next_Question_Order
-                    }).ToList()
-                }).ToList()
+                    }).ToList().OrderBy(i => i.Order)
+                }).ToList().OrderBy(i => i.Order)
+            };
+            return completeSurvey;
+        }
+
+        //Get Survey with questions only
+        public async Task<SurveyWithQuestionsDto> GetSurveyWithQuestionsAsync(int surveyID)
+        {
+            var survey = await _unitOfWork.SurveyRepo.GetSurveyWithQuestions(surveyID);
+
+            var completeSurvey = new SurveyWithQuestionsDto
+            {
+                SurveyName = survey!.Name,
+                Questions = survey.Questions.Select(i => new QuestionReadDto
+                {
+                    QuestionText = i.Text,
+                    Order = i.Order,
+
+                }).ToList().OrderBy(i => i.Order)
             };
             return completeSurvey;
         }

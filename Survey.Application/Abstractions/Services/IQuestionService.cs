@@ -10,5 +10,8 @@ namespace Survey.Application.Abstractions.Services
     public interface IQuestionService
     {
         Task AddQuestionAsync(QuestionAddDto newQuestion);
+        Task<QuestionReadDto?> GetQuestionAsync(int id);
+        Task<QuestionWithChoicesReadDto?> GetQuestionWithChoicesAsync(int id);
+        Task<int> GetNextQuestionIdAsync(int choiceId);
     }
 }

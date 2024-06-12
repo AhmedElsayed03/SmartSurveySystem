@@ -28,5 +28,35 @@ namespace SurveySystem.API.Controllers
             return TypedResults.NoContent();
         }
 
+        [HttpGet("get-question/{id}")]
+        public async Task<QuestionReadDto?> GetQuestionAsync(int id)
+        {
+
+            var question = await _questionService.GetQuestionAsync(id);
+
+            return question;
+        }
+
+
+        [HttpGet("get-question-with-choices/{id}")]
+        public async Task<QuestionWithChoicesReadDto?> GetQuestionWithChoicesAsync(int id)
+        {
+
+            var question = await _questionService.GetQuestionWithChoicesAsync(id);
+
+            return question;
+        }
+
+
+        [HttpGet("get-next-question")]
+        public async Task<int?> GetNextQuestionId(int choiceId)
+        {
+
+            var question = await _questionService.GetNextQuestionIdAsync(choiceId);
+
+            return question;
+        }
+
+
     }
 }

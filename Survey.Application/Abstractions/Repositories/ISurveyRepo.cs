@@ -9,5 +9,7 @@ namespace Survey.Application.Abstractions.Repositories
 {
     public interface ISurveyRepo : IGenericRepo<Domain.Entities.Survey>
     {
+        Task<Domain.Entities.Survey?> GetCompleteSurvey(int id);
+
     }
 }

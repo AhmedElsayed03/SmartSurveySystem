@@ -27,5 +27,21 @@ namespace SurveySystem.API.Controllers
 
             return TypedResults.NoContent();
         }
+
+        [HttpGet("all-surveys")]
+        public async Task<List<SurveyReadDto>> GetAllSurveysAsync()
+        {
+            var surveys = await _surveyService.GetAllSurveysAsync();
+
+            return surveys;
+        }
+
+        [HttpGet("get-survey/{id}")]
+        public async Task<CompleteSurveyDTO> GetCompleteSurvey(int id)
+        {
+            var completeSurvey = await _surveyService.GetSurveyAsync(id);
+
+            return completeSurvey;
+        }
     }
 }

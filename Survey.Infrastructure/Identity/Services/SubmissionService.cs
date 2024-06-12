@@ -18,21 +18,20 @@ namespace Survey.Infrastructure.Identity.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void addSubmission(SubmissionAddDto newSubmission)
+        public async Task AddSubmissionAsync(SubmissionAddDto newSubmission)
         {
             Submission submission = new Submission()
             {
                 Text = newSubmission.Text,
                 MemberId = newSubmission.MemberId,
                 ChoiceId = newSubmission.ChoiceId,
-                //QuestionId = newSubmission.QuestionId,
                 CreateTime = DateTime.Now,
-
-                //CreatedBy = GetAdminID from Token
+                CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newSubmission.Token)
+                //QuestionId = newSubmission.QuestionId,
             };
 
-            _unitOfWork.SubmissionRepo.AddAsync(submission);
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SubmissionRepo.AddAsync(submission);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

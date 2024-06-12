@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Survey.Infrastructure.Identity.Services
 {
-    public class SurveyService:ISurveyService
+    public class SurveyService : ISurveyService
     {
         private readonly IUnitOfWork _unitOfWork;
         public SurveyService(IUnitOfWork unitOfWork)
@@ -21,7 +21,8 @@ namespace Survey.Infrastructure.Identity.Services
 
         public async Task AddSurveyAsync(SurveyAddDto newSurvey)
         {
-            Domain.Entities.Survey survey = new Domain.Entities.Survey() {
+            Domain.Entities.Survey survey = new Domain.Entities.Survey()
+            {
 
                 Name = newSurvey.Name,
                 CreateTime = DateTime.Now,
@@ -33,6 +34,38 @@ namespace Survey.Infrastructure.Identity.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
+        public async Task<List<SurveyReadDto>> GetAllSurveysAsync()
+        {
+            var surveys = await _unitOfWork.SurveyRepo.GetAllAsync();
 
+            var allSsurveys = surveys.Select(s => new SurveyReadDto
+            {
+                SurveyName = s.Name,
+            }).ToList();
+            return allSsurveys;
+        }
+
+        public async Task<CompleteSurveyDTO> GetSurveyAsync(int surveyID)
+        {
+            var survey = await _unitOfWork.SurveyRepo.GetCompleteSurvey(surveyID);
+
+            var completeSurvey = new CompleteSurveyDTO
+            {
+                SurveyName = survey!.Name,
+                Questions = survey.Questions.Select(i => new QuestionReadDto
+                {
+                    QuestionText = i.Text,
+                    Order = i.Order,
+
+                    Choices = i.Choices.Select(i => new ChoiceReadDto
+                    {
+                        Text = i.Text,
+                        Order = i.Order,
+                        Next_Question_Order = i.Next_Question_Order
+                    }).ToList()
+                }).ToList()
+            };
+            return completeSurvey;
+        }
     }
 }

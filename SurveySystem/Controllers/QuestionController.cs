@@ -19,7 +19,7 @@ namespace SurveySystem.API.Controllers
 
         [HttpPost("add-question")]
         [Authorize(Policy = "For Admins")]
-        public async Task<NoContent> AddSurveyAsync(QuestionAddDto newQuestion)
+        public async Task<NoContent> AddQuestionAsync(QuestionAddDto newQuestion)
         {
 
             newQuestion.Token = Request.Headers.Authorization!;

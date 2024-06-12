@@ -10,5 +10,7 @@ namespace Survey.Application.Abstractions.Services
     public interface ISurveyService
     {
         Task AddSurveyAsync(SurveyAddDto newSurvey);
+        Task<CompleteSurveyDTO> GetSurveyAsync(int surveyID);
+        Task<List<SurveyReadDto>> GetAllSurveysAsync();
     }
 }

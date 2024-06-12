@@ -1,4 +1,5 @@
-﻿using Survey.Application.Abstractions.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Survey.Application.Abstractions.Repositories;
 using Survey.Domain.Entities;
 using Survey.Infrastructure.Data.Context;
 using System;
@@ -16,6 +17,19 @@ namespace Survey.Infrastructure.Data.Repositories
         public SurveyRepo(SurveyDbContext context) : base(context)
         {
             _dbContext = context;
+        }
+
+        public async Task<Domain.Entities.Survey?> GetCompleteSurvey(int id)
+        {
+            
+
+            var surveyData = await _dbContext.Surveys
+                                       .Include(i=>i.Questions)
+                                            .ThenInclude(i=>i.Choices)
+                                       .Where(i=>i.Id == id)
+                                       .FirstOrDefaultAsync();
+
+            return surveyData;
         }
     }
 }

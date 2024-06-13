@@ -34,13 +34,40 @@ namespace Survey.Infrastructure.Data.Repositories
             return question;
         }
 
-        public async Task<int> GetNextQuestionId(int order)
-        {
-            int questionId = await _dbContext.Questions
-                                       .Where(i => i.Order == order)
+
+
+        public async Task<int> GetNextQuestionId(int questionId, int nextQuestionOrder) //Getting the parameters from the submitted choices
+        {  
+            //Get Survey Id using question Id (Gets what is the survey that a certain question belongs to)
+            int surveyId = await _dbContext.Surveys
+                                       .Where(i => i.Id == questionId)
                                        .Select(i => i.Id)
                                        .FirstOrDefaultAsync();
-            return questionId;
+
+            //Get Question Order using Question Id then add 1
+            if (nextQuestionOrder == 0)
+            {
+                int Order = await _dbContext.Questions.Where(i => i.Id == questionId)
+                           .Select(i => i.Order)
+                           .FirstOrDefaultAsync();
+
+                int nextQuestionId = await _dbContext.Questions
+                           .Where(i => i.SurveyId == surveyId && i.Order == Order + 1)
+                           .Select(i => i.Id)
+                           .FirstOrDefaultAsync();
+
+                return nextQuestionId;
+            }
+
+            else
+            {
+                //Get Question Id using Survey Id and Qrder Id
+                int nextQuestionId = await _dbContext.Questions
+                                           .Where(i => i.SurveyId == surveyId && i.Order == nextQuestionOrder)
+                                           .Select(i => i.Id)
+                                           .FirstOrDefaultAsync();
+                return nextQuestionId;
+            }
         }
     }
 }

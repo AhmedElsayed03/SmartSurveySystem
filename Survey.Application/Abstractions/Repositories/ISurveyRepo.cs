@@ -11,6 +11,5 @@ namespace Survey.Application.Abstractions.Repositories
     {
         Task<Domain.Entities.Survey?> GetCompleteSurvey(int id);
         Task<Domain.Entities.Survey?> GetSurveyWithQuestions(int id);
-
     }
 }

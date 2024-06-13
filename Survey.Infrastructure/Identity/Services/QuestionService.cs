@@ -69,29 +69,10 @@ namespace Survey.Infrastructure.Identity.Services
             return questionRead;
         }
 
-
-        //Get Next question from Choices
-        public async Task<int> GetNextQuestionIdAsync(int choiceId)
-        {
-            var choice = await _unitOfWork.ChoiceRepo.GetByIdAsync(choiceId);
-
-
-            var nextQuestionOrder = choice!.Next_Question_Order;
-
-            if (nextQuestionOrder == 0 ) //or add null
-            {
-
-                var questionId = choice.QuestionId;
-                var question = await _unitOfWork.QuestionRepo.GetByIdAsync(questionId);
-                var nextQuestion = question!.Order + 1;
-                return nextQuestion; //return Id
-            }
-            else
-            {
-                var questionId = await _unitOfWork.QuestionRepo.GetNextQuestionId(nextQuestionOrder);
-                return questionId; //return Id
-            }
-
+        public async Task<int> GetNextQuestionId(int questionId, int nextQuestionOrder)
+        {   
+                return await _unitOfWork.QuestionRepo.GetNextQuestionId(questionId, nextQuestionOrder);
         }
+
     }
 }

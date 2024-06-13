@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Survey.Application.Abstractions.Services;
 using Survey.Application.Models.DTOs;
+using Survey.Domain.Entities;
 using Survey.Infrastructure.Identity.Services;
 
 namespace SurveySystem.API.Controllers
@@ -28,6 +29,7 @@ namespace SurveySystem.API.Controllers
             return TypedResults.NoContent();
         }
 
+
         [HttpGet("get-question/{id}")]
         public async Task<QuestionReadDto?> GetQuestionAsync(int id)
         {
@@ -49,10 +51,10 @@ namespace SurveySystem.API.Controllers
 
 
         [HttpGet("get-next-question")]
-        public async Task<int?> GetNextQuestionId(int choiceId)
+        public async Task<int?> GetNextQuestionId(int questionId, int nextQuestionOrder)
         {
 
-            var question = await _questionService.GetNextQuestionIdAsync(choiceId);
+            var question = await _questionService.GetNextQuestionId(questionId, nextQuestionOrder);
 
             return question;
         }

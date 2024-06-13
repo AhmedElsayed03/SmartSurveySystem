@@ -29,12 +29,21 @@ namespace SurveySystem.API.Controllers
             return TypedResults.NoContent();
         }
 
+
         [HttpGet("all-surveys")]
         public async Task<List<SurveyReadDto>> GetAllSurveysAsync()
         {
             var surveys = await _surveyService.GetAllSurveysAsync();
 
             return surveys;
+        }
+
+        [HttpGet("get-survey-with-questions/{id}")]
+        public async Task<SurveyWithQuestionsDto> GetSurveyWithQuestions(int id)
+        {
+            var completeSurvey = await _surveyService.GetSurveyWithQuestionsAsync(id);
+
+            return completeSurvey;
         }
 
         [HttpGet("get-survey/{id}")]
@@ -45,12 +54,6 @@ namespace SurveySystem.API.Controllers
             return completeSurvey;
         }
 
-        [HttpGet("get-survey-with-questions/{id}")]
-        public async Task<SurveyWithQuestionsDto> GetSurveyWithQuestions(int id)
-        {
-            var completeSurvey = await _surveyService.GetSurveyWithQuestionsAsync(id);
 
-            return completeSurvey;
-        }
     }
 }

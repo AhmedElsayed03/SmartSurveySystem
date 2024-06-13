@@ -10,6 +10,6 @@ namespace Survey.Application.Abstractions.Repositories
     public interface IQuestionRepo : IGenericRepo<Question>
     {
         Task<Question?> GetQuestionWithChoices(int id);
-        Task<int> GetNextQuestionId(int id);
+        Task<int> GetNextQuestionId(int questionId, int nextQuestionOrder);
     }
 }

@@ -14,11 +14,11 @@ namespace Survey.Domain.Entities
         //Foreign Key
         public int MemberId { get; set; }
         public int ChoiceId { get; set; }
-        //public int QuestionId { get; set; }
+        public int QuestionId { get; set; }
 
         //Nav Properties
         public Member? Member { get; set; }
         public Choice? Choice { get; set; }
-        //public Question? Question { get; set; }
+        public Question? Question { get; set; }
     }
 }

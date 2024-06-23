@@ -20,6 +20,7 @@ namespace Survey.Infrastructure.Data.UnitOfWork
         public IMemberSurveyRepo MemberSurveyRepo { get; }
         public IMemberRepo MemberRepo { get; }
         public IAdminRepo AdminRepo { get; }
+        public ISectionRepo SectionRepo { get; }
         public UnitOfWork(SurveyDbContext context,
                           ISurveyRepo surveyRepo,
                           IQuestionRepo questionRepo,
@@ -28,7 +29,8 @@ namespace Survey.Infrastructure.Data.UnitOfWork
                           IFileUploadRepo fileUploadRepo,
                           IMemberSurveyRepo memberSurveyRepo,
                           IMemberRepo memberRepo,
-                          IAdminRepo adminRepo)
+                          IAdminRepo adminRepo,
+                          ISectionRepo sectionRepo)
         {
             _context = context;
             SurveyRepo = surveyRepo;
@@ -39,6 +41,7 @@ namespace Survey.Infrastructure.Data.UnitOfWork
             MemberSurveyRepo = memberSurveyRepo;
             MemberRepo = memberRepo;
             AdminRepo = adminRepo;
+            SectionRepo = sectionRepo;
 
         }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Survey.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -102,6 +102,22 @@ namespace Survey.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QuestionTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sections", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -285,8 +301,8 @@ namespace Survey.Infrastructure.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     SurveyId = table.Column<int>(type: "int", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    QTypeId = table.Column<int>(type: "int", nullable: true),
+                    QTypeId = table.Column<int>(type: "int", nullable: false),
+                    SectionId = table.Column<int>(type: "int", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<int>(type: "int", nullable: false)
@@ -298,7 +314,14 @@ namespace Survey.Infrastructure.Migrations
                         name: "FK_Questions_QuestionTypes_QTypeId",
                         column: x => x.QTypeId,
                         principalTable: "QuestionTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Questions_Sections_SectionId",
+                        column: x => x.SectionId,
+                        principalTable: "Sections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Questions_Surveys_SurveyId",
                         column: x => x.SurveyId,
@@ -341,6 +364,7 @@ namespace Survey.Infrastructure.Migrations
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
                     ChoiceId = table.Column<int>(type: "int", nullable: false),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<int>(type: "int", nullable: false)
@@ -360,6 +384,12 @@ namespace Survey.Infrastructure.Migrations
                         principalTable: "Members",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Submissions_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -422,6 +452,11 @@ namespace Survey.Infrastructure.Migrations
                 column: "QTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Questions_SectionId",
+                table: "Questions",
+                column: "SectionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_SurveyId",
                 table: "Questions",
                 column: "SurveyId");
@@ -435,6 +470,11 @@ namespace Survey.Infrastructure.Migrations
                 name: "IX_Submissions_MemberId",
                 table: "Submissions",
                 column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Submissions_QuestionId",
+                table: "Submissions",
+                column: "QuestionId");
         }
 
         /// <inheritdoc />
@@ -484,6 +524,9 @@ namespace Survey.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuestionTypes");
+
+            migrationBuilder.DropTable(
+                name: "Sections");
 
             migrationBuilder.DropTable(
                 name: "Surveys");

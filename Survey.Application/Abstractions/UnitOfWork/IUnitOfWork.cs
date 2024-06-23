@@ -17,6 +17,7 @@ namespace Survey.Application.Abstractions.UnitOfWork
         public IMemberSurveyRepo MemberSurveyRepo { get; }
         public IMemberRepo MemberRepo { get; }
         public IAdminRepo AdminRepo { get; }
+        public ISectionRepo SectionRepo { get; }
         Task<int> SaveChangesAsync();
     }
 }

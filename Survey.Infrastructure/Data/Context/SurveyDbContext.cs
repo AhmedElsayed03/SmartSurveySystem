@@ -30,6 +30,7 @@ namespace Survey.Infrastructure.Data.Context
         public DbSet<Submission> Submissions => Set<Submission>();
         public DbSet<FileUpload> Files => Set<FileUpload>();
         public DbSet<QuestionType> QuestionTypes => Set<QuestionType>();
+        public DbSet<Section> Sections => Set<Section>();
 
 
         protected override void OnModelCreating(ModelBuilder builder)

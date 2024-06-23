@@ -19,18 +19,16 @@ namespace Survey.Infrastructure.Data.EntityConfiguration
 
             builder.HasOne(i => i.Member)
                    .WithMany(i => i.Submissions)
-                   .HasForeignKey(i => i.MemberId)
-                   .OnDelete(DeleteBehavior.NoAction); 
+                   .HasForeignKey(i => i.MemberId); 
 
             builder.HasOne(i => i.Choice)
                    .WithMany(i => i.Submissions)
-                   .HasForeignKey(i => i.ChoiceId)
-                   .OnDelete(DeleteBehavior.NoAction);
+                   .HasForeignKey(i => i.ChoiceId);
 
-            //builder.HasOne(i => i.Question)
-            //       .WithMany(i => i.Submissions)
-            //       .HasForeignKey(i => i.QuestionId);
-            //.OnDelete(DeleteBehavior.NoAction); 
+            builder.HasOne(i => i.Question)
+                   .WithMany(i => i.Submissions)
+                   .HasForeignKey(i => i.QuestionId)
+                   .OnDelete(DeleteBehavior.NoAction);
 
             var submissions = new List<Submission>
             {

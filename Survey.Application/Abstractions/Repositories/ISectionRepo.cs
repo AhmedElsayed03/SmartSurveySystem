@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Survey.Application.Abstractions.Repositories
 {
-    public interface IChoiceRepo : IGenericRepo<Choice>
+    public interface ISectionRepo : IGenericRepo<Section>
     {
-        Task<IEnumerable<Choice>> GetAllChoicesAsync(int questionId);
+        
     }
 }

@@ -34,6 +34,21 @@ namespace Survey.Infrastructure.Identity.Services
             await _unitOfWork.ChoiceRepo.AddAsync(Choice);
             await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<ChoiceReadDto>> GetAllChoicesAsync(int QuestionId)
+        {
+            var choices = await _unitOfWork.ChoiceRepo.GetAllChoicesAsync(QuestionId);
+
+            var readChoices = choices.Select(x => new ChoiceReadDto()
+            {
+
+                Text = x.Text,
+                Next_Question_Order = x.Next_Question_Order,
+                Order = x.Order
+            }).ToList();
+
+            return readChoices;
+        }
         
     }
 }

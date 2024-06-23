@@ -301,7 +301,10 @@ namespace Survey.Infrastructure.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int?>("QTypeId")
+                    b.Property<int>("QTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SectionId")
                         .HasColumnType("int");
 
                     b.Property<int>("SurveyId")
@@ -311,15 +314,14 @@ namespace Survey.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("QTypeId");
+
+                    b.HasIndex("SectionId");
 
                     b.HasIndex("SurveyId");
 
@@ -346,6 +348,32 @@ namespace Survey.Infrastructure.Migrations
                     b.ToTable("QuestionTypes");
                 });
 
+            modelBuilder.Entity("Survey.Domain.Entities.Section", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sections");
+                });
+
             modelBuilder.Entity("Survey.Domain.Entities.Submission", b =>
                 {
                     b.Property<int>("Id")
@@ -366,6 +394,9 @@ namespace Survey.Infrastructure.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -378,6 +409,8 @@ namespace Survey.Infrastructure.Migrations
                     b.HasIndex("ChoiceId");
 
                     b.HasIndex("MemberId");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Submissions");
                 });
@@ -610,7 +643,15 @@ namespace Survey.Infrastructure.Migrations
                 {
                     b.HasOne("Survey.Domain.Entities.QuestionType", "QType")
                         .WithMany("Questions")
-                        .HasForeignKey("QTypeId");
+                        .HasForeignKey("QTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Survey.Domain.Entities.Section", "Section")
+                        .WithMany("Questions")
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Survey.Domain.Entities.Survey", "Survey")
                         .WithMany("Questions")
@@ -619,6 +660,8 @@ namespace Survey.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("QType");
+
+                    b.Navigation("Section");
 
                     b.Navigation("Survey");
                 });
@@ -637,9 +680,17 @@ namespace Survey.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Survey.Domain.Entities.Question", "Question")
+                        .WithMany("Submissions")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Choice");
 
                     b.Navigation("Member");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Choice", b =>
@@ -659,9 +710,16 @@ namespace Survey.Infrastructure.Migrations
             modelBuilder.Entity("Survey.Domain.Entities.Question", b =>
                 {
                     b.Navigation("Choices");
+
+                    b.Navigation("Submissions");
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.QuestionType", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Survey.Domain.Entities.Section", b =>
                 {
                     b.Navigation("Questions");
                 });

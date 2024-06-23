@@ -1,4 +1,5 @@
-﻿using Survey.Application.Abstractions.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Survey.Application.Abstractions.Repositories;
 using Survey.Domain.Entities;
 using Survey.Infrastructure.Data.Context;
 using System;
@@ -16,6 +17,14 @@ namespace Survey.Infrastructure.Data.Repositories
         public ChoiceRepo(SurveyDbContext context) : base(context)
         {
             _dbContext = context;
+        }
+
+        public async Task<IEnumerable<Choice>> GetAllChoicesAsync(int questionId)
+        {
+            var choices = await _dbContext.Choices.Where(x => x.QuestionId == questionId)
+                                                  .ToListAsync();
+
+            return choices;             
         }
     }
 }

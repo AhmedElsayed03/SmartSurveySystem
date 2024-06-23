@@ -26,8 +26,8 @@ namespace Survey.Infrastructure.Identity.Services
                 MemberId = newSubmission.MemberId,
                 ChoiceId = newSubmission.ChoiceId,
                 CreateTime = DateTime.Now,
-                CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newSubmission.Token)
-                //QuestionId = newSubmission.QuestionId,
+                CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newSubmission.Token),
+                QuestionId = newSubmission.QuestionId,
             };
 
             await _unitOfWork.SubmissionRepo.AddAsync(submission);

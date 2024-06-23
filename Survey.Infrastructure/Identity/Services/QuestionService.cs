@@ -31,8 +31,9 @@ namespace Survey.Infrastructure.Identity.Services
                 CreateTime = DateTime.Now,
                 CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newQuestion.Token),
                 Order = newQuestion.Order,
-                TypeId = newQuestion.TypeId,
+                QTypeId = newQuestion.TypeId,
                 SurveyId = newQuestion.SurveyId,
+                SectionId = newQuestion.SectionId
             };
 
             await _unitOfWork.QuestionRepo.AddAsync(question);

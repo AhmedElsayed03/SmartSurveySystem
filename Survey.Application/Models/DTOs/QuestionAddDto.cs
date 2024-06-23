@@ -14,6 +14,7 @@ namespace Survey.Application.Models.DTOs
         public int Order { get; set; }
         public int TypeId { get; set; }
         public int SurveyId { get; set; }
+        public int SectionId { get; set; }
 
 
     }

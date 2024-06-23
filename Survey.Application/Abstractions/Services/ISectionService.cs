@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Survey.Application.Abstractions.Services
 {
-    public interface IChoiceService
+    public interface ISectionService
     {
-        Task AddChoiceAsync(ChoiceAddDto newChoice);
-        Task<IEnumerable<ChoiceReadDto>> GetAllChoicesAsync(int QuestionId);
+        Task AddSectionAsync(SectionAddDto sectionAddDto);
     }
 }

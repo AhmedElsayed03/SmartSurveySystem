@@ -27,5 +27,16 @@ namespace SurveySystem.API.Controllers
 
             return TypedResults.NoContent();
         }
+
+        [HttpGet("get-choices/{QuestionId}")]
+        public async Task<IEnumerable<ChoiceReadDto?>> GetAllChoicesAsync(int QuestionId)
+        {
+
+            var choices = await _choiceService.GetAllChoicesAsync(QuestionId);
+
+            return choices;
+        }
+
+
     }
 }

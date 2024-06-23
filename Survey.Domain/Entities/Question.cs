@@ -16,12 +16,14 @@ namespace Survey.Domain.Entities
 
         //Foreign Key
         public int SurveyId { get; set; }
-        public int TypeId { get; set; }
+        public int QTypeId { get; set; }
+        public int SectionId { get; set; }
 
         //Nav Property
         public Survey? Survey { get; set; }
         public QuestionType? QType { get; set; }
+        public Section? Section { get; set; }
         public IEnumerable<Choice> Choices { get; set; } = new List<Choice>();
-        //public IEnumerable<Submission> Submissions { get; set; } = new List<Submission>();
+        public IEnumerable<Submission> Submissions { get; set; } = new List<Submission>();
     }
 }

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Survey.Application.Abstractions.Repositories
 {
-    public interface IFileUploadRepo : IGenericRepo<FileUpload>
+    public interface IUploadedFileRepo : IGenericRepo<UploadedFile>
     {
+        
     }
 }

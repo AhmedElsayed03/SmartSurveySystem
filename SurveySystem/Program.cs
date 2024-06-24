@@ -47,6 +47,7 @@ namespace SurveySystem.API
             });
 
             #endregion
+
             #region Authorization
 
             builder.Services.AddAuthorization(options =>
@@ -67,8 +68,24 @@ namespace SurveySystem.API
             });
 
             #endregion
+
             #region Services
             builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            #endregion
+
+            #region Add Cors
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
             #endregion
 
             var app = builder.Build();
@@ -80,8 +97,15 @@ namespace SurveySystem.API
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowAll");
+
             #region Files Handling
             var staticFilesPath = Path.Combine(Environment.CurrentDirectory, "UploadedFiles");
+            if (!Directory.Exists(staticFilesPath))
+            {
+                Directory.CreateDirectory(staticFilesPath);
+            }
+
             //Configuration to let app use static files
             app.UseStaticFiles(new StaticFileOptions
             {

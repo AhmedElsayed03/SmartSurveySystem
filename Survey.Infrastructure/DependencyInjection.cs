@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Survey.Application.Abstractions.Repositories;
 using Survey.Application.Abstractions.Services;
 using Survey.Application.Abstractions.Services.Identity;
+using Survey.Application.Abstractions.Services.Storage;
 using Survey.Application.Abstractions.UnitOfWork;
 using Survey.Application.Models.Identity;
 using Survey.Infrastructure.Data.Context;
@@ -14,6 +15,7 @@ using Survey.Infrastructure.Data.UnitOfWork;
 using Survey.Infrastructure.Identity.Models;
 using Survey.Infrastructure.Identity.Services;
 using Survey.Infrastructure.Identity.Services.Identity;
+using Survey.Infrastructure.Identity.Services.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,12 +63,12 @@ namespace Survey.Infrastructure
             services.AddScoped<ISurveyRepo, SurveyRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IChoiceRepo, ChoiceRepo>();
-            services.AddScoped<IFileUploadRepo, FileUploadRepo>();
             services.AddScoped<ISubmissionRepo, SubmissionRepo>();
             services.AddScoped<IMemberSurveyRepo, MemberSurveyRepo>();
             services.AddScoped<IMemberRepo, MemberRepo>();
             services.AddScoped<IAdminRepo, AdminRepo>();
             services.AddScoped<ISectionRepo, SectionRepo>();
+            services.AddScoped<IUploadedFileRepo, UploadedFileRepo>();
             #endregion
 
 
@@ -76,10 +78,11 @@ namespace Survey.Infrastructure
             services.AddScoped<IChoiceService, ChoiceService>();
             services.AddScoped<IMemberSurveyService, MemberSurveyService>();
             services.AddScoped<IMemberService, MemberService>();
-            services.AddScoped<IFileUploadService, FileUploadService>();
             services.AddScoped<ISubmissionService, SubmissionService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ISectionService, SectionService>();
+            services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<IFileService, FileService>();
             #endregion
 
 

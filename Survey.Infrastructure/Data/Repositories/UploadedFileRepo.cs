@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Survey.Infrastructure.Data.Repositories
 {
-    public class FileUploadRepo: GenericRepo<FileUpload>, IFileUploadRepo
+    public class UploadedFileRepo : GenericRepo<UploadedFile>, IUploadedFileRepo
     {
         private readonly SurveyDbContext _dbContext;
 
-        public FileUploadRepo(SurveyDbContext context) : base(context)
+        public UploadedFileRepo(SurveyDbContext context) : base(context)
         {
             _dbContext = context;
         }

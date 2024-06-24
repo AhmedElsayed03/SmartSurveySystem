@@ -16,33 +16,34 @@ namespace Survey.Infrastructure.Data.UnitOfWork
         public IQuestionRepo QuestionRepo { get; }private readonly SurveyDbContext _context;
         public IChoiceRepo ChoiceRepo { get; }
         public ISubmissionRepo SubmissionRepo { get; }
-        public IFileUploadRepo FileUploadRepo { get; }
         public IMemberSurveyRepo MemberSurveyRepo { get; }
         public IMemberRepo MemberRepo { get; }
         public IAdminRepo AdminRepo { get; }
         public ISectionRepo SectionRepo { get; }
+        public IUploadedFileRepo UploadedFileRepo { get; }
+
+
         public UnitOfWork(SurveyDbContext context,
                           ISurveyRepo surveyRepo,
                           IQuestionRepo questionRepo,
                           IChoiceRepo choiceRepo,
                           ISubmissionRepo submissionRepo,
-                          IFileUploadRepo fileUploadRepo,
                           IMemberSurveyRepo memberSurveyRepo,
                           IMemberRepo memberRepo,
                           IAdminRepo adminRepo,
-                          ISectionRepo sectionRepo)
+                          ISectionRepo sectionRepo,
+                          IUploadedFileRepo uploadedFileRepo)
         {
             _context = context;
             SurveyRepo = surveyRepo;
             QuestionRepo = questionRepo;
             ChoiceRepo = choiceRepo;
             SubmissionRepo = submissionRepo;
-            FileUploadRepo = fileUploadRepo;
             MemberSurveyRepo = memberSurveyRepo;
             MemberRepo = memberRepo;
             AdminRepo = adminRepo;
             SectionRepo = sectionRepo;
-
+            UploadedFileRepo = uploadedFileRepo;
         }
 
         public async Task<int> SaveChangesAsync()

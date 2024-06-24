@@ -155,7 +155,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Choice", b =>
@@ -192,7 +192,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Choices");
+                    b.ToTable("Choices", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.FileUpload", b =>
@@ -231,7 +231,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Member", b =>
@@ -263,7 +263,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Members");
+                    b.ToTable("Members", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.MemberSurvey", b =>
@@ -278,7 +278,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasIndex("SurveyId");
 
-                    b.ToTable("MemberSurveys");
+                    b.ToTable("MemberSurveys", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Question", b =>
@@ -325,7 +325,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasIndex("SurveyId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.QuestionType", b =>
@@ -345,7 +345,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("QuestionTypes");
+                    b.ToTable("QuestionTypes", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Section", b =>
@@ -371,7 +371,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sections");
+                    b.ToTable("Sections", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Submission", b =>
@@ -412,7 +412,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Submissions");
+                    b.ToTable("Submissions", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Survey", b =>
@@ -438,7 +438,7 @@ namespace Survey.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Surveys");
+                    b.ToTable("Surveys", (string)null);
                 });
 
             modelBuilder.Entity("Survey.Infrastructure.Identity.Models.SystemRole", b =>

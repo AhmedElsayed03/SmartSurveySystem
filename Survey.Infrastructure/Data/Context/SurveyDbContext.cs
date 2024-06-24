@@ -28,7 +28,7 @@ namespace Survey.Infrastructure.Data.Context
         public DbSet<Admin> Admins => Set<Admin>();
         public DbSet<MemberSurvey> MemberSurveys => Set<MemberSurvey>();
         public DbSet<Submission> Submissions => Set<Submission>();
-        public DbSet<FileUpload> Files => Set<FileUpload>();
+        public DbSet<UploadedFile> Files => Set<UploadedFile>();
         public DbSet<QuestionType> QuestionTypes => Set<QuestionType>();
         public DbSet<Section> Sections => Set<Section>();
 

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Survey.Infrastructure.Data.EntityConfiguration
 {
-    public class FileUploadConfiguration : IEntityTypeConfiguration<FileUpload>
+    public class FileUploadConfiguration : IEntityTypeConfiguration<UploadedFile>
     {
-        public void Configure(EntityTypeBuilder<FileUpload> builder)
+        public void Configure(EntityTypeBuilder<UploadedFile> builder)
         {
             builder.HasKey(i => i.Id);
 

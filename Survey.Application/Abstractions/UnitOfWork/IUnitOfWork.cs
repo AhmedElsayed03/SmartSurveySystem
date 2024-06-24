@@ -13,11 +13,11 @@ namespace Survey.Application.Abstractions.UnitOfWork
         public IQuestionRepo QuestionRepo { get; }
         public IChoiceRepo ChoiceRepo { get; }
         public ISubmissionRepo SubmissionRepo { get; }
-        public IFileUploadRepo FileUploadRepo { get; }
         public IMemberSurveyRepo MemberSurveyRepo { get; }
         public IMemberRepo MemberRepo { get; }
         public IAdminRepo AdminRepo { get; }
         public ISectionRepo SectionRepo { get; }
+        public IUploadedFileRepo UploadedFileRepo { get; }
         Task<int> SaveChangesAsync();
     }
 }

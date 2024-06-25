@@ -25,14 +25,14 @@ namespace Survey.Infrastructure.Data.EntityConfiguration
                        .HasForeignKey(i => i.SurveyId)
                        .OnDelete(DeleteBehavior.NoAction);
 
-            var surveys = new List<Domain.Entities.Survey>
-                {
-                    // Surveys
-                    new Domain.Entities.Survey { Id = 1, Name = "Medical", CreateTime = DateTime.Now },
-                    new Domain.Entities.Survey { Id = 2, Name = "Technical", CreateTime = DateTime.Now },
-                    new Domain.Entities.Survey { Id = 3, Name = "Educational", CreateTime = DateTime.Now },
-                };
-            builder.HasData(surveys);
+            //var surveys = new List<Domain.Entities.Survey>
+            //    {
+            //        // Surveys
+            //        new Domain.Entities.Survey { Id = 1, Name = "Medical", CreateTime = DateTime.Now },
+            //        new Domain.Entities.Survey { Id = 2, Name = "Technical", CreateTime = DateTime.Now },
+            //        new Domain.Entities.Survey { Id = 3, Name = "Educational", CreateTime = DateTime.Now },
+            //    };
+            //builder.HasData(surveys);
         }
     }
 }

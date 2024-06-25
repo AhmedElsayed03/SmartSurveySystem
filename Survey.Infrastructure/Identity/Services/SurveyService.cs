@@ -47,12 +47,42 @@ namespace Survey.Infrastructure.Identity.Services
             return allSurveys;
         }
 
+
         //Get Complete Survey with questions and choices
-        public async Task<CompleteSurveyDTO> GetSurveyAsync(int surveyID)
+        public async Task<CompleteSurveyDto> GetSurveyAsync(int surveyID)
         {
             var survey = await _unitOfWork.SurveyRepo.GetCompleteSurvey(surveyID);
 
-            var completeSurvey = new CompleteSurveyDTO
+            var completeSurvey = new CompleteSurveyDto
+            {
+                SurveyName = survey!.Name,
+                Sections = survey.Sections.Select(i => new SectionsWithQuestionsWithChoicesDto
+                {
+                    SectionName = i.Name,
+                    Questions = survey.Questions.Select(i => new QuestionWithChoicesReadDto
+                    {
+                        QuestionText = i.Text,
+                        Order = i.Order,
+
+                        Choices = i.Choices.Select(i => new ChoiceReadDto
+                        {
+                            Text = i.Text,
+                            Order = i.Order,
+                            Next_Question_Order = i.Next_Question_Order
+                        }).ToList().OrderBy(i => i.Order)
+                    }).ToList().OrderBy(i => i.Order)
+                }).ToList()
+            };
+            return completeSurvey;
+        }
+
+
+        //Get Survey with questions and choices
+        public async Task<SurveyWithQuestionsWithChoicesDTO> GetSurveyWithQuestionsWithChoicesAsync(int surveyID)
+        {
+            var survey = await _unitOfWork.SurveyRepo.GetCompleteSurvey(surveyID);
+
+            var completeSurvey = new SurveyWithQuestionsWithChoicesDTO
             {
                 SurveyName = survey!.Name,
                 Questions = survey.Questions.Select(i => new QuestionWithChoicesReadDto

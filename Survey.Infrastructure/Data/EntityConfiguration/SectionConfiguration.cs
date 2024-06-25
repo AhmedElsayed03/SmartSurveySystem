@@ -18,6 +18,7 @@ namespace Survey.Infrastructure.Data.EntityConfiguration
             builder.HasMany(x => x.Questions)
                    .WithOne(x => x.Section)
                    .HasForeignKey(x => x.SectionId);
+
         }
     }
 }

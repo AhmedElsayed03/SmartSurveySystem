@@ -35,8 +35,8 @@ namespace Survey.Infrastructure.Identity.Services.Storage
         {
             var folderPath = _configuration.GetValue<string>(StoragePath)!;
             string filePath = Path.Combine(folderPath, fileName);
-            using var fileStram = new FileStream(filePath, FileMode.Create);
-            await file.CopyToAsync(fileStram);
+            using var fileStream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(fileStream);
         }
 
         private string GetFileUrl(string fileName)
@@ -47,8 +47,9 @@ namespace Survey.Infrastructure.Identity.Services.Storage
                 Scheme = httpRequest.Scheme,
                 Host = httpRequest.Host.Host,
                 Port = httpRequest.Host.Port ?? default,
-                Path = Path.Combine(FileConfigurations.StaticPath, fileName)
+                Path = Path.Combine(FileConfigurations.StaticPath, fileName),
             };
+     
             var url = builder.ToString();
             return url;
         }

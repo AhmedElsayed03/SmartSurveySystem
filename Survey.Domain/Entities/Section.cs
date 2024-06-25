@@ -10,6 +10,9 @@ namespace Survey.Domain.Entities
     {
         public string Name { get; set; } = string.Empty;
 
+        public Survey? Survey { get; set; }
+        public int SurveyId { get; set; }
+
         public IEnumerable<Question> Questions { get; set; } = new List<Question>();
     }
 }

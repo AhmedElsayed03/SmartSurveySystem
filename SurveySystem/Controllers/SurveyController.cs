@@ -45,9 +45,17 @@ namespace SurveySystem.API.Controllers
 
             return completeSurvey;
         }
+        
+        [HttpGet("get-survey-with-questions-with-Choices/{id}")]
+        public async Task<SurveyWithQuestionsWithChoicesDTO> GetSurveyWithQuestionsWithChoices(int id)
+        {
+            var completeSurvey = await _surveyService.GetSurveyWithQuestionsWithChoicesAsync(id);
+
+            return completeSurvey;
+        }
 
         [HttpGet("get-survey/{id}")]
-        public async Task<CompleteSurveyDTO> GetCompleteSurvey(int id)
+        public async Task<CompleteSurveyDto> GetCompleteSurvey(int id)
         {
             var completeSurvey = await _surveyService.GetSurveyAsync(id);
 

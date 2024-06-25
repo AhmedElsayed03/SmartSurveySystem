@@ -105,13 +105,11 @@ namespace SurveySystem.API
             {
                 Directory.CreateDirectory(staticFilesPath);
             }
-
             //Configuration to let app use static files
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(staticFilesPath),
                 RequestPath = "/UploadedFiles" //Localhost:####/(Request Path)/Capture.PNG(Static File Name)
-
             });
             #endregion
 

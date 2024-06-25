@@ -12,7 +12,7 @@ using Survey.Infrastructure.Data.Context;
 namespace Survey.Infrastructure.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20240625060824_initial")]
+    [Migration("20240625123540_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -330,10 +330,15 @@ namespace Survey.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SurveyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SurveyId");
 
                     b.ToTable("Sections");
                 });
@@ -660,6 +665,17 @@ namespace Survey.Infrastructure.Migrations
                     b.Navigation("Survey");
                 });
 
+            modelBuilder.Entity("Survey.Domain.Entities.Section", b =>
+                {
+                    b.HasOne("Survey.Domain.Entities.Survey", "Survey")
+                        .WithMany("Sections")
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
             modelBuilder.Entity("Survey.Domain.Entities.Submission", b =>
                 {
                     b.HasOne("Survey.Domain.Entities.Choice", "Choice")
@@ -734,6 +750,8 @@ namespace Survey.Infrastructure.Migrations
                     b.Navigation("MemberSurveys");
 
                     b.Navigation("Questions");
+
+                    b.Navigation("Sections");
                 });
 #pragma warning restore 612, 618
         }

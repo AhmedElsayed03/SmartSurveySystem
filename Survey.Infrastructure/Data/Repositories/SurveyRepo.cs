@@ -19,7 +19,22 @@ namespace Survey.Infrastructure.Data.Repositories
             _dbContext = context;
         }
 
+       
         public async Task<Domain.Entities.Survey?> GetCompleteSurvey(int id)
+        {
+
+            var surveyData = await _dbContext.Surveys
+                                       .Include(i=>i.Sections)
+                                           .ThenInclude(i => i.Questions)
+                                                .ThenInclude(i => i.Choices)
+                                       .Where(i => i.Id == id)
+                                       .FirstOrDefaultAsync();
+
+            return surveyData;
+        }
+
+
+        public async Task<Domain.Entities.Survey?> GetSurveyWithQuestionsWithChoices(int id)
         {
     
             var surveyData = await _dbContext.Surveys

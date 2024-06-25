@@ -20,7 +20,7 @@ namespace SurveySystem.API.Controllers
             _storageService = storageService;
         }
 
-        [HttpPost]
+        [HttpPost("upload-file")]
         public async Task<Ok<FileResultDto>> CreateFile(IFormFile file, int MemberId)
         {
             var fileInput = new FileInputDto(file.FileName.GetExtension(),
@@ -28,6 +28,7 @@ namespace SurveySystem.API.Controllers
                 file.Length,
                 file.OpenReadStream());
             fileInput.MemberId = MemberId;
+
             var fileResult = await _fileService.CreateFileAsync(fileInput);
             return TypedResults.Ok(fileResult);
         }

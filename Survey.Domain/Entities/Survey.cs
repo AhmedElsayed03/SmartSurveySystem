@@ -14,5 +14,6 @@ namespace Survey.Domain.Entities
         //Nav Property
         public IEnumerable<MemberSurvey> MemberSurveys { get; set; } = new List<MemberSurvey>();
         public IEnumerable<Question> Questions { get; set; } = new List<Question>();
+        public IEnumerable<Section> Sections { get; set; } = new List<Section>();
     }
 }

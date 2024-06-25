@@ -17,7 +17,13 @@ namespace Survey.Infrastructure.Data.EntityConfiguration
 
             builder.HasMany(i => i.Questions)
                        .WithOne(i => i.Survey)
-                       .HasForeignKey(i => i.SurveyId);
+                       .HasForeignKey(i => i.SurveyId)
+                       .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(i => i.Sections)
+                       .WithOne(i => i.Survey)
+                       .HasForeignKey(i => i.SurveyId)
+                       .OnDelete(DeleteBehavior.NoAction);
 
             var surveys = new List<Domain.Entities.Survey>
                 {

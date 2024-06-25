@@ -5,6 +5,7 @@ using Survey.Application.Abstractions.Services;
 using Survey.Application.Abstractions.Services.Storage;
 using Survey.Application.Abstractions.UnitOfWork;
 using Survey.Application.Execptions;
+using Survey.Application.Models.DTOs;
 using Survey.Application.Models.DTOs.Files;
 using Survey.Domain.Entities;
 using Survey.Domain.Enum;
@@ -56,6 +57,7 @@ namespace Survey.Infrastructure.Identity.Services
 
             return new FileResultDto(uploadedFile.Id, url);
         }
+        #endregion
 
         private FileType GetFileType(string extension)
         {
@@ -69,7 +71,13 @@ namespace Survey.Infrastructure.Identity.Services
             };
         }
 
-        #endregion
+
+        public async Task<FileReadDto> GetFileAsync(int id)
+        {
+            var File = await _unitOfWork.UploadedFileRepo.GetByIdAsync(id);
+            return new FileReadDto {Id = File!.Id, Name = File.Name, Url = File.Url};
+        }
+
 
     }
 }

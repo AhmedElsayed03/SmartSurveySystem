@@ -4,6 +4,7 @@ using Survey.Application.Abstractions.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Survey.Application.Models.DTOs.Files;
 using Survey.Infrastructure;
+using Survey.Application.Models.DTOs;
 
 namespace SurveySystem.API.Controllers
 {
@@ -31,6 +32,13 @@ namespace SurveySystem.API.Controllers
 
             var fileResult = await _fileService.CreateFileAsync(fileInput);
             return TypedResults.Ok(fileResult);
+        }
+
+        [HttpGet("get-file")]
+        public async Task<Ok<FileReadDto>> GetFile(int id)
+        {
+            var files = await _fileService.GetFileAsync(id);
+            return TypedResults.Ok(files);
         }
     }
 }

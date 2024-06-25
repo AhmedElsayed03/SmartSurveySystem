@@ -21,12 +21,13 @@ namespace SurveySystem.API.Controllers
         }
 
         [HttpPost]
-        public async Task<Ok<FileResultDto>> CreateFile(IFormFile file)
+        public async Task<Ok<FileResultDto>> CreateFile(IFormFile file, int MemberId)
         {
             var fileInput = new FileInputDto(file.FileName.GetExtension(),
                 file.FileName.GetFileNameWithoutExtension(),
                 file.Length,
                 file.OpenReadStream());
+            fileInput.MemberId = MemberId;
             var fileResult = await _fileService.CreateFileAsync(fileInput);
             return TypedResults.Ok(fileResult);
         }

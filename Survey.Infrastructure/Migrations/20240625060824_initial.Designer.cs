@@ -12,7 +12,7 @@ using Survey.Infrastructure.Data.Context;
 namespace Survey.Infrastructure.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20240623121504_initial")]
+    [Migration("20240625060824_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -196,45 +196,6 @@ namespace Survey.Infrastructure.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Choices");
-                });
-
-            modelBuilder.Entity("Survey.Domain.Entities.FileUpload", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FileType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Member", b =>
@@ -444,6 +405,47 @@ namespace Survey.Infrastructure.Migrations
                     b.ToTable("Surveys");
                 });
 
+            modelBuilder.Entity("Survey.Domain.Entities.UploadedFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FileType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("Survey.Infrastructure.Identity.Models.SystemRole", b =>
                 {
                     b.Property<int>("Id")
@@ -612,17 +614,6 @@ namespace Survey.Infrastructure.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("Survey.Domain.Entities.FileUpload", b =>
-                {
-                    b.HasOne("Survey.Domain.Entities.Member", "Member")
-                        .WithMany("Files")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-                });
-
             modelBuilder.Entity("Survey.Domain.Entities.MemberSurvey", b =>
                 {
                     b.HasOne("Survey.Domain.Entities.Member", "Member")
@@ -694,6 +685,17 @@ namespace Survey.Infrastructure.Migrations
                     b.Navigation("Member");
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Survey.Domain.Entities.UploadedFile", b =>
+                {
+                    b.HasOne("Survey.Domain.Entities.Member", "Member")
+                        .WithMany("Files")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Survey.Domain.Entities.Choice", b =>

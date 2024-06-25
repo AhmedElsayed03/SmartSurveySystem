@@ -249,8 +249,9 @@ namespace Survey.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<long>(type: "bigint", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileType = table.Column<int>(type: "int", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true),

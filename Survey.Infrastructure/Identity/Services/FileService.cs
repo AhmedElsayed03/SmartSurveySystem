@@ -47,7 +47,9 @@ namespace Survey.Infrastructure.Identity.Services
                 Name = fileDto.Name,
                 Size = fileDto.Length,
                 FileType = fileType,
-                Url = url
+                Url = url,
+                MemberId = fileDto.MemberId,
+
             };
             await _unitOfWork.UploadedFileRepo.AddAsync(uploadedFile);
             await _unitOfWork.SaveChangesAsync();

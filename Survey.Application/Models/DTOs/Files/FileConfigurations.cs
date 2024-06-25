@@ -9,7 +9,7 @@ namespace Survey.Application.Models.DTOs.Files
     public class FileConfigurations
     {
         public const string SectionName = "FileConfigurations";
-        public const string StaticPath = "Files";
+        public const string StaticPath = "UploadedFiles";
         public long Size { get; set; }
         public string Path { get; set; } = string.Empty;
         public string[] WordExtensions { get; set; } = [];

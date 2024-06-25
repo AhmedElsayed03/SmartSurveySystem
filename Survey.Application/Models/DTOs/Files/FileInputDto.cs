@@ -13,6 +13,7 @@ namespace Survey.Application.Models.DTOs.Files
         public string Name { get; set; } = string.Empty;
         public long Length { get; set; }
         public Stream? Stream { get; set; }
+        public int MemberId { get; set; }
 
         public FileInputDto(string extention, string name, long length, Stream? stream)
         {

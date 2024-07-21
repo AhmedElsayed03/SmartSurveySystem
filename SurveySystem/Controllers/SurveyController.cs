@@ -30,6 +30,20 @@ namespace SurveySystem.API.Controllers
         }
 
 
+        [HttpPost("create-complete-survey")]
+        [Authorize(Policy = "For Admins")]
+        public async Task<NoContent> AddCompleteSurveyAsync(CompleteSurveyPostDTO newCompleteSurvey)
+        {
+
+            newCompleteSurvey.Token = Request.Headers.Authorization!;
+            await _surveyService.CreateCompleteSurveyAsync(newCompleteSurvey);
+
+            return TypedResults.NoContent();
+        } 
+
+
+
+
         [HttpGet("all-surveys")]
         public async Task<List<SurveyReadDto>> GetAllSurveysAsync()
         {

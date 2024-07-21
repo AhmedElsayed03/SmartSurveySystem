@@ -3,6 +3,7 @@ using Survey.Application.Abstractions.Repositories;
 using Survey.Application.Abstractions.Services;
 using Survey.Application.Abstractions.UnitOfWork;
 using Survey.Application.Models.DTOs;
+using Survey.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,55 @@ namespace Survey.Infrastructure.Identity.Services
         public SurveyService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+        //Create Complete Survey in a single JSON
+        public async Task CreateCompleteSurveyAsync(CompleteSurveyPostDTO newSurvey)
+        {
+            //Survey JSON
+            Domain.Entities.Survey survey = new Domain.Entities.Survey()
+            {
+
+                Name = newSurvey.Name,
+                CreateTime = DateTime.Now,
+                CreatedBy = await _unitOfWork.SurveyRepo.GetUserFormTokenAsync(newSurvey.Token)
+            };
+
+            //Section JSON
+            newSurvey.Sections.Select(async i =>
+            {
+                Section section = new Section
+                {
+                    Name = i.Name,
+                    SurveyId = survey.Id,
+                    CreatedBy = await _unitOfWork.SectionRepo.GetUserFormTokenAsync(newSurvey.Token)
+                };
+                await _unitOfWork.SectionRepo.AddAsync(section);
+            }
+            );
+
+            ////Question JSON
+            //newSurvey.Sections.Select(i => i.Questions.Select(x => {
+            //    new Question
+            //    {
+            //        Text = x.Text,
+            //        IsDeleted = false,
+            //        Order = x.Order,
+            //        QTypeId = x.TypeId,
+            //    };
+
+            //}));
+
+            ////Choices JSON
+            //newSurvey.Sections.Select(i => i.Questions.Select(x => x.Choices.Select(y => new Choice
+            //{
+            //    Next_Question_Order = y.Next_Question_Order,
+            //    Text = y.Text,
+            //    Order = y.Order,
+            //})));
+
+
+            await _unitOfWork.SurveyRepo.AddAsync(survey);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         //Create Survey
